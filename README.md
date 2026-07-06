@@ -1,3 +1,9 @@
+# Generar un archivo `.exe` para el proyecto
+
+Esta guía explica cómo convertir esto en un ejecutable `.exe` para Windows utilizando `jpackage`.
+
+---
+
 ## Integrantes
 
 - Diego Almeida 
@@ -9,9 +15,7 @@
 - Matias Borja
 - Emely Bone
 
-# Generar un archivo `.exe` para el proyecto
-
-Esta guía explica cómo convertir esto en un ejecutable `.exe` para Windows utilizando `jpackage`.
+---
 
 ## Requisitos
 
