@@ -61,3 +61,67 @@ public class CRUDController {
         });
         mostrar();
     }
+
+    private void mostrar() {
+        animales = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM animales";
+
+        try(Connection con = Conexion.getConexion();){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()){
+                Animales animal = new Animales();
+
+                animal.setId(rs.getInt("id"));
+                animal.setNombre(rs.getString("nombre"));
+                animal.setSexo(rs.getString("sexo"));
+                animal.setTipo(rs.getString("tipo"));
+                animal.setEdad(rs.getInt("edad"));
+                animal.setPeso(rs.getDouble("peso"));
+                animales.add(animal);
+            }
+
+            tblAnimales.setItems(animales);
+        } catch (SQLException e){
+            mostrarAlerta("Error", "No se pudo cargar los datos." + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void guardar() {
+        String sql = "INSERT INTO animales (nombre, tipo, edad, peso, sexo) Values (?, ?, ?, ?, ?)";
+
+        String nombre = txtNombre.getText().trim();
+        String tipo = txtTipo.getText().trim();
+        String edadStr = txtEdad.getText().trim();
+        String pesoStr = txtPeso.getText().trim();
+        String sexo = cbxSexo.getValue();
+
+        if (nombre.isEmpty() || tipo.isEmpty() || edadStr.isEmpty() || pesoStr.isEmpty() || sexo.isEmpty()) {
+            mostrarAlerta("Error", "Todos los campos son obligatorios.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        int edad = (int) Double.parseDouble(edadStr);
+        double peso = Double.parseDouble(pesoStr);
+
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ps.setString(2, tipo);
+            ps.setInt(3, edad);
+            ps.setDouble(4, peso);
+            ps.setString(5, sexo);
+
+            ps.executeUpdate();
+            mostrar();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+            e.printStackTrace();
+            alert.showAndWait();
+            return;
+        }
+    }
+    
+
