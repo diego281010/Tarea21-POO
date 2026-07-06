@@ -1,3 +1,14 @@
+## Integrantes
+
+- Diego Almeida 
+- Gregory Araujo
+- Alejandro Aguirre 
+- Jordy Cajas 
+- Nicolay Barreno 
+- Sebastian Caiza 
+- Matias Borja
+- Emely Bone
+
 # Generar un archivo `.exe` para el proyecto
 
 Esta guía explica cómo convertir esto en un ejecutable `.exe` para Windows utilizando `jpackage`.
